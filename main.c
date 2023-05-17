@@ -1,5 +1,6 @@
 /*
-*
+* Name: ifxr
+* Date: 17 May 2023
 */
 #include "getword.h"
 
