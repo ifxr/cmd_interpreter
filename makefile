@@ -1,7 +1,7 @@
-# A Makefile for Program 1, CS480
-# Provided by Dr. John Carroll
+# Provided by Dr. John Carroll 
+# Original makefile slightly modified for this project
 
-PROGRAM = p1
+PROGRAM = main
 CC = gcc
 CFLAGS = -g
 
@@ -12,8 +12,8 @@ CFLAGS = -g
 # 'make' (with no parameters) makes the FIRST target (which in this case
 # is equivalent to 'make p1', due to the definition of PROGRAM above).
 
-${PROGRAM}:	getword.o p1.o
-		${CC} -o p1 getword.o p1.o
+${PROGRAM}:	getword.o main.o
+		${CC} -o main getword.o main.o
 # the action on the above line calls gcc (actually, it calls the linker, since
 # we are dealing with .o object modules), links them, and renames a.out to p1 .
 # The make program first checks if the two files getword.o and p1.o are up to
