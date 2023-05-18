@@ -35,7 +35,11 @@ int getword(char *w){
 		else{
 			return (int)strlen(w);
 		}
-		
+	
+	// Terminates the program if user types 'end.'`
+	if(strcmp(w, "end.") == 0)
+			return -1;
+
 	}
 	return 0;
 }
