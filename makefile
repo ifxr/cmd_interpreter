@@ -21,7 +21,7 @@ ${PROGRAM}:	getword.o main.o
 # respectively).  If (say) p1.o is not up to date, then make looks for guidance
 # about how to create p1.o, which is listed below:
 
-p1.o:		getword.h
+main.o:		getword.h
 
 # p1.c could be listed as a dependency above, but 'make' is smart enough to know
 # that p1.o depends on p1.c, so we don't really have to list it.
