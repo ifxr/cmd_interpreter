@@ -54,7 +54,11 @@ int getword(char *w){
 
 				if (spaceCount>=1)
 					continue;
-			}
+			}//Handles EOF and 'end.' termination commands
+			else if(c == EOF || (strcmp(w, "end.") == 0))
+				return -1;
+		
+			spaceCount = 0;	
 			return (int)strlen(w);
 		}
 	
