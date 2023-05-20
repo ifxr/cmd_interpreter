@@ -45,6 +45,9 @@ int getword(char *w){
 			// Handles the '&', '|', and the '<' meta characters
 			else if(( c == '&' || c == '|' || c == '<') && strlen(w) == 0)
 				strncat(w, &temp, 1);
+			// Handles newline characters
+			else if(c == '\n' && strlen(w) > 0)
+				ungetc(c, stdin);
 			// Handles spaces
 			else if (c == ' '&& strlen(w) ==0){
 				spaceCount++;
