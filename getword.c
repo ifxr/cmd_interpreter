@@ -17,6 +17,7 @@
 int getword(char *w){
 	int c;				// integer value of the character inserted by user
 	w[0] = '\0';			// Will 'empty' the char *w
+	int spaceCount = 0;		// Will keep track of the amount of spaces
 
 	while (( c = getchar()) != '\0'){
 		char temp = c;					// Makes it easier to convert and append to a string
@@ -44,7 +45,13 @@ int getword(char *w){
 			// Handles the '&', '|', and the '<' meta characters
 			else if(( c == '&' || c == '|' || c == '<') && strlen(w) == 0)
 				strncat(w, &temp, 1);
+			// Handles spaces
+			else if (c == ' '&& strlen(w) ==0){
+				spaceCount++;
 
+				if (spaceCount>=1)
+					continue;
+			}
 			return (int)strlen(w);
 		}
 	
