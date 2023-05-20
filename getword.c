@@ -12,6 +12,7 @@
 */
 
 #include "getword.h"
+//TODO: backslash effect
 
 int getword(char *w){
 	int c;				// integer value of the character inserted by user
@@ -33,6 +34,11 @@ int getword(char *w){
 		else if (((c>= 48 && c<= 57) || (c == '.') || ( c == '-') || (c == '!') || (c == '/') || (c == '"') || (c=='#') || (c==':')) && w[0] != '>')
 			strncat(w, &temp, 1);
 		else{
+			//Handles metacharacters '>>' and >&'
+			if(strlen(w) == 0 && c == '>'){
+				strncat(w, &temp, 1);
+				continue;
+			}
 			return (int)strlen(w);
 		}
 	
