@@ -53,6 +53,15 @@ int getword(char *w){
 				continue;
 			}
 
+			// if backslash occurs, it will append the folowing character/meta-character
+			if(backslashCount == 1){
+				if(c==' ' || c=='<' || c=='>' || c=='&' || c=='|' || c=='\\' ){
+					strncat(w, &temp, 1);
+					backslashCount = 0;
+					continue;
+				}				
+			}
+
 			// Handles metacharacters: '>>' and '>&'
 			if(strlen(w) == 1 && w[0] == '>' && c != ' '){
 				if (c == '>'){
