@@ -16,8 +16,10 @@
 
 int getword(char *w){
 	int c;				// integer value of the character inserted by user
-	w[0] = '\0';			// Will 'empty' the char *w
 	int spaceCount = 0;		// Will keep track of the amount of spaces
+	int backslashCount = 0;		// Will indicate if the program has encountered a backslash. 0: NO, 1: YES
+	int bsEffect = 0;		// Will indicate if character preceding backslash will be affected by it
+	w[0] = '\0';			// Will 'empty' the char *w
 
 	while (( c = getchar()) != '\0'){
 		char temp = c;					// Makes it easier to convert and append to a string
@@ -27,14 +29,30 @@ int getword(char *w){
 			ungetc(c, stdin);
 			return (int)strlen(w);
 		}
-
-		// Checks to see whether the character is a letter
-		if(((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')|| c == '(' || c == ')' || c == '@' || c == '_'|| c == '+') && w[0] != '>')
+		
+		// Checks to see whether the character is a letter or a valid symbol when bsEffect is active
+		if(((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '(' || c ==  ')'||c == '@' || c == '_' || c == '+')&& w[0] == '>' && bsEffect == 1){	
 			strncat(w, &temp, 1);
-		// Checks to see that the chracter is a valid number as well as a period or a dash
+			continue;
+		}// Checks to see whether the character is a valid number or a valid symbol when bsEffect is active 
+		else if (((c>= 48 && c<= 57) || (c == '.') || ( c == '-') || (c == '!') || (c == '/') || (c == '"') || (c=='#') || (c==':'))&& w[0] == '>' && bsEffect == 1){
+			strncat(w, &temp, 1);
+			continue;
+		} 
+		// Checks to see whether the character is a letter or a valid symbol
+		else if(((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')|| c == '(' || c == ')' || c == '@' || c == '_'|| c == '+') && w[0] != '>')
+			strncat(w, &temp, 1);
+		// Checks to see that the character is a valid number or a valid symbol
 		else if (((c>= 48 && c<= 57) || (c == '.') || ( c == '-') || (c == '!') || (c == '/') || (c == '"') || (c=='#') || (c==':')) && w[0] != '>')
 			strncat(w, &temp, 1);
 		else{
+			// Will filter out '\' metacharacter and activate the backslash and bsEffect variables
+			if(c == '\\' && backslashCount == 0){
+				backslashCount = 1;
+				bsEffect = 1;
+				continue;
+			}
+
 			// Handles metacharacters: '>>' and '>&'
 			if(strlen(w) == 1 && w[0] == '>' && c != ' '){
 				if (c == '>'){
@@ -77,7 +95,7 @@ int getword(char *w){
 			else if(c == '\n' && strlen(w) > 0)
 				ungetc(c, stdin);
 			// Handles spaces
-			else if (c == ' '&& strlen(w) ==0){
+			else if (c == ' ' && strlen(w) ==0){
 				spaceCount++;
 
 				if (spaceCount>=1)
