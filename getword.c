@@ -39,7 +39,10 @@ int getword(char *w){
 			if(strlen(w) == 0 && c == '>'){
 				strncat(w, &temp, 1);
 				continue;
-			}// when string length > 0,  will reinsert these metacharacters back on stdin
+			}
+			else if(c == '>' && strlen(w) > 0&& w[0] != '>')
+				ungetc(c, stdin);
+			// when string length > 0,  will reinsert these metacharacters back on stdin
 			else if(( c == '&' || c == '|' || c == '<') && strlen(w) > 0)
 				ungetc(c, stdin);
 			// Handles the '&', '|', and the '<' meta characters
