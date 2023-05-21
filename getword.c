@@ -35,7 +35,7 @@ int getword(char *w){
 		else if (((c>= 48 && c<= 57) || (c == '.') || ( c == '-') || (c == '!') || (c == '/') || (c == '"') || (c=='#') || (c==':')) && w[0] != '>')
 			strncat(w, &temp, 1);
 		else{
-			// Handles the '>>' and '>&' metacharacters
+			// Handles metacharacters: '>>' and '>&'
 			if(strlen(w) == 1 && w[0] == '>' && c != ' '){
 				if (c == '>'){
 	           		strncat(w, &temp, 1);
@@ -48,7 +48,7 @@ int getword(char *w){
 				else
   		            ungetc(c, stdin);
 			 }
-			// Handles the '>>&' metacharacter
+			// Handles metacharacter: '>>&'
 			else if( strlen(w) == 2 && w[0] == '>' && w[1] == '>' && c != ' ' ){
 				if(c == '&'){
 					strncat(w, &temp, 1);
@@ -57,13 +57,16 @@ int getword(char *w){
 				else
 					ungetc(c, stdin);
 			}
-			//Handles metacharacters '>>' and >&'
 			else if(strlen(w) == 0 && c == '>'){
 				strncat(w, &temp, 1);
 				continue;
 			}
 			else if(c == '>' && strlen(w) > 0&& w[0] != '>')
 				ungetc(c, stdin);	
+			// Will put back the last character back on stream
+			// Fixes bug where the first letter gets clipped when using metachar: '>>', '>&' and '>>&'
+			else if(strlen(w) == 3 && c != ' ')
+				ungetc(c, stdin);
 			// when string length > 0,  will reinsert these metacharacters back on stdin
 			else if(( c == '&' || c == '|' || c == '<') && strlen(w) > 0)
 				ungetc(c, stdin);
