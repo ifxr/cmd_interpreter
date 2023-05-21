@@ -48,6 +48,15 @@ int getword(char *w){
 				else
   		            ungetc(c, stdin);
 			 }
+			// Handles the '>>&' metacharacter
+			else if( strlen(w) == 2 && w[0] == '>' && w[1] == '>' && c != ' ' ){
+				if(c == '&'){
+					strncat(w, &temp, 1);
+					continue;
+				}
+				else
+					ungetc(c, stdin);
+			}
 			//Handles metacharacters '>>' and >&'
 			else if(strlen(w) == 0 && c == '>'){
 				strncat(w, &temp, 1);
